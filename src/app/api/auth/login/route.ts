@@ -32,6 +32,13 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 dias
     });
 
+    res.cookies.set("userRole", role, {
+      httpOnly: false, // ← pode ser lido pelo JS
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24,
+    });
+
     return res;
   } catch (err: unknown) {
     const error = err as { response?: { data?: unknown; status?: number } };
