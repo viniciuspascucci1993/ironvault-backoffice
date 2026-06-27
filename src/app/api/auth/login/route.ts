@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
 export async function POST(request: NextRequest) {
+  console.log("BFF_URL:", process.env.BFF_URL);
+  console.log(
+    "All env:",
+    Object.keys(process.env).filter((k) => k.includes("BFF")),
+  );
   try {
     const body = await request.json();
 
@@ -30,6 +35,7 @@ export async function POST(request: NextRequest) {
     return res;
   } catch (err: unknown) {
     const error = err as { response?: { data?: unknown; status?: number } };
+    console.error("Login error:", error.response?.data || error); // ← adiciona
     return NextResponse.json(
       error.response?.data || { message: "Internal server error" },
       { status: error.response?.status || 500 },
