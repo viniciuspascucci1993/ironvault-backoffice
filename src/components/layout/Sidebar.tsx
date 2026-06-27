@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CreditCard, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, CreditCard, Users, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -20,6 +20,12 @@ const allNavItems = [
     roles: ["ADMIN", "MERCHANT"],
   },
   { href: "/users", label: "Usuários", icon: Users, roles: ["ADMIN"] },
+  {
+    href: "/profile",
+    label: "Perfil",
+    icon: User,
+    roles: ["ADMIN", "MERCHANT"],
+  },
 ];
 
 export default function Sidebar() {
