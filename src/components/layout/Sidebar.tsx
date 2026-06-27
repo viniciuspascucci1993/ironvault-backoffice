@@ -4,16 +4,41 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, CreditCard, Users, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/transactions", label: "Transações", icon: CreditCard },
-  { href: "/users", label: "Usuários", icon: Users },
+const allNavItems = [
+  {
+    href: "/dashboard",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    roles: ["ADMIN", "MERCHANT"],
+  },
+  {
+    href: "/transactions",
+    label: "Transações",
+    icon: CreditCard,
+    roles: ["ADMIN", "MERCHANT"],
+  },
+  { href: "/users", label: "Usuários", icon: Users, roles: ["ADMIN"] },
 ];
 
 export default function Sidebar() {
-  const pathName = usePathname();
+  const pathname = usePathname();
   const router = useRouter();
+  const [role, setRole] = useState<string>("");
+
+  useEffect(() => {
+    const getRole = async () => {
+      const cookieRole = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("userRole="))
+        ?.split("=")[1];
+      setRole(cookieRole || "");
+    };
+    void getRole();
+  }, []);
+
+  const navItems = allNavItems.filter((item) => item.roles.includes(role));
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -22,17 +47,15 @@ export default function Sidebar() {
 
   return (
     <aside className="w-56 bg-slate-800 flex flex-col border-r border-slate-700">
-      {/* LOGO CONTENT */}
       <div className="p-6 border-b border-slate-700">
         <h1 className="text-white font-bold text-lg">⚡ IronVault</h1>
         <p className="text-slate-400 text-xs mt-0.5">Backoffice</p>
       </div>
 
-      {/* NAV CONTENT */}
       <nav className="flex-1 p-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathName === item.href;
+          const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
@@ -50,7 +73,6 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* LOGOUT CONTENT */}
       <div className="p-4 border-t border-slate-700">
         <button
           onClick={handleLogout}
