@@ -27,8 +27,6 @@ export default function ProfilePage() {
     }
 
     setLoading(true);
-    // TODO: endpoint /api/auth/change-password ainda não existe no auth
-    // será implementado na branch feat/change-password
     try {
       await axios.post("/api/auth/change-password", {
         currentPassword,
@@ -47,8 +45,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="max-w-lg">
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+    <div className="flex justify-center pt-26">
+      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 w-full max-w-lg">
         <h2 className="text-white font-medium text-lg mb-6">Alterar Senha</h2>
 
         <form onSubmit={handleChangePassword} className="space-y-4">
