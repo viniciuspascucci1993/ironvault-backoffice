@@ -71,6 +71,16 @@ export default function LoginPage() {
           >
             {loading ? "Entrando..." : "Entrar"}
           </button>
+
+          {/* Link esqueceu a senha */}
+          <div className="text-center">
+            <a
+              href="/forgot-password"
+              className="text-slate-400 hover:text-indigo-400 text-sm transition-colors"
+            >
+              Esqueceu sua senha?
+            </a>
+          </div>
         </form>
       </div>
     </div>
