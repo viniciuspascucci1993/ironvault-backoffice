@@ -1,9 +1,11 @@
 import { getServerApi } from "@/lib/serverApi";
 import { DashboardSummary } from "@/types";
 import { TrendingUp, Users, CreditCard, CheckCircle } from "lucide-react";
+import DashboardCharts from "@/components/ui/DashboardCharts";
 
 export default async function DashboardPage() {
   const api = await getServerApi();
+  console.log('BFF_URL:', process.env.BFF_URL)
   const res = await api.get<DashboardSummary>("/api/dashboard/summary");
   const summary = res.data;
 
@@ -77,6 +79,14 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
+
+        {/* Charts */}
+        <DashboardCharts
+          transactionsChartData={summary.transactionsByChartData}
+          revenueChartData={summary.revenueByChartData}
+          transactionsByStatus={summary.transactionsByStatus}
+        />
     </div>
   );
+  
 }

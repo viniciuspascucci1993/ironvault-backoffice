@@ -38,6 +38,14 @@ export interface DashboardSummary {
     failed: number,
     processing: number
   }
+  transactionsByChartData: {
+    date: string
+    count: number
+  }[]
+  revenueByChartData: {
+    date: string
+    amount: number
+  }[]
 }
 
 export interface AuthResponse {
