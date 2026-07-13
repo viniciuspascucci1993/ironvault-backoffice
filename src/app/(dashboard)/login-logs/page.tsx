@@ -53,7 +53,7 @@ export default async function LoginLogPage() {
                 {log.failureReason || "-"}
               </td>
               <td className="px-6 py-4 text-slate-400 text-sm">
-                {new Date(log.createdAt).toLocaleString("pt-BR")}
+                {new Date(log.createdAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
               </td>
             </tr>
           ))}
