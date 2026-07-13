@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CreditCard, Users, LogOut, User } from "lucide-react";
+import {
+  LayoutDashboard,
+  CreditCard,
+  Users,
+  LogOut,
+  User,
+  ScrollText,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -20,6 +27,12 @@ const allNavItems = [
     roles: ["ADMIN", "MERCHANT"],
   },
   { href: "/users", label: "Usuários", icon: Users, roles: ["ADMIN"] },
+  {
+    href: "/login-logs",
+    label: "Logs de Login",
+    icon: ScrollText,
+    roles: ["ADMIN"],
+  },
   {
     href: "/profile",
     label: "Perfil",
