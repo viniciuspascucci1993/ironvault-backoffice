@@ -24,8 +24,18 @@ export function proxy(request: NextRequest) {
   }
 
   // Protege rota de usuários — só ADMIN
-  // Protege rota de usuários — só ADMIN
   if (accessToken && pathname.startsWith("/users")) {
+    try {
+      const payload = jwtDecode<JwtPayload>(accessToken);
+      if (payload.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/dashboard", request.url));
+      }
+    } catch {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
+  if (accessToken && pathname.startsWith("/login-logs")) {
     try {
       const payload = jwtDecode<JwtPayload>(accessToken);
       if (payload.role !== "ADMIN") {
