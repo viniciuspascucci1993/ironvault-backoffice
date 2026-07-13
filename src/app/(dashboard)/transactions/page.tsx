@@ -60,7 +60,7 @@ export default async function TransactionsPage() {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-slate-400 text-sm">
-                  {new Date(payment.createdAt).toLocaleDateString("pt-BR")}
+                  {new Date(payment.createdAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
                 </td>
               </tr>
             ))}
