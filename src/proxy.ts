@@ -5,6 +5,7 @@ interface JwtPayload {
   role: string;
   sub: string;
   userId: string;
+  exp?: number;
 }
 
 export function proxy(request: NextRequest) {
@@ -18,7 +19,29 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Se tem token e está tentando acessar o login
+  // Verifica se o token está expirado
+  if (accessToken) {
+    try {
+      const payload = jwtDecode<JwtPayload>(accessToken);
+      const isExpired = payload.exp ? payload.exp * 1000 < Date.now() : false;
+
+      if (isExpired) {
+        const res = NextResponse.redirect(new URL("/login", request.url));
+        res.cookies.delete("accessToken");
+        res.cookies.delete("refreshToken");
+        res.cookies.delete("userRole");
+        return res;
+      }
+    } catch {
+      const res = NextResponse.redirect(new URL("/login", request.url));
+      res.cookies.delete("accessToken");
+      res.cookies.delete("refreshToken");
+      res.cookies.delete("userRole");
+      return res;
+    }
+  }
+
+  // Se tem token e está tentando acessar rota pública
   if (accessToken && publicRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
