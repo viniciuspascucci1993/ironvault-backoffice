@@ -9,6 +9,7 @@ import {
   LogOut,
   User,
   ScrollText,
+  Settings,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,10 +34,10 @@ const allNavItems = [
     icon: ScrollText,
     roles: ["ADMIN"],
   },
-  {
-    href: "/profile",
-    label: "Perfil",
-    icon: User,
+    {
+    href: "/settings",
+    label: "Configurações",
+    icon: Settings,
     roles: ["ADMIN", "MERCHANT"],
   },
 ];
