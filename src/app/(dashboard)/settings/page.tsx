@@ -1,9 +1,18 @@
-import { getTokenPayload } from '@/lib/serverApi'
-import { Shield, User, Mail, Calendar } from 'lucide-react'
+import ApiKeyManager from '@/components/ui/ApiKeyManager'
+import { getServerApi, getTokenPayload } from '@/lib/serverApi'
+import { Shield, User, Mail, Calendar, Key } from 'lucide-react'
 
 export default async function SettingPage() {
   const payload = await getTokenPayload()
+  const api = await getServerApi()
 
+  let currentApiKey = ''
+  try {
+    const res = await api.get('/api/keys')
+    currentApiKey = res.data.apiKey || ''
+  } catch {
+    currentApiKey = ''
+  }
 return (
     <div className="space-y-6">
 
@@ -68,12 +77,17 @@ return (
         </div>
       </div>
 
-      {/* API Key - futuro */}
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 opacity-50">
-        <h2 className="text-white font-medium text-lg mb-2">API Key</h2>
-        <p className="text-slate-400 text-sm">Em breve — integre o IronVault ao seu e-commerce</p>
+      {/* API Key */}
+      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+        <h2 className="text-white font-medium text-lg mb-2 flex items-center gap-2">
+          <Key size={18} className="text-indigo-400" />
+          API Key
+        </h2>
+        <p className="text-slate-400 text-sm mb-6">
+          Use esta chave para integrar o IronVault ao seu e-commerce
+        </p>
+        <ApiKeyManager initialKey={currentApiKey} />
       </div>
-
     </div>
   )
 }
