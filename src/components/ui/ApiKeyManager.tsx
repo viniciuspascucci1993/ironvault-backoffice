@@ -32,7 +32,7 @@ export default function ApiKeyManager({ initialKey }: ApiKeyManagerProps) {
     setLoading(true);
 
     try {
-      const res = await axios.post("/api/keys/revoke");
+      const res = await axios.delete("/api/keys/revoke");
       setApiKey(res.data.apiKey);
     } catch {
       toast.error("Erro ao revogar API Key");
