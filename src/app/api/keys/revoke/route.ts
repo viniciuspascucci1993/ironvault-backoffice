@@ -9,7 +9,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ message: 'UnAuthorized' }, { status: 401 })
     }
 
-    await axios.post(
+    await axios.delete(
       `${process.env.BFF_URL}/api/keys/revoke`,
       { headers: { Authorization: `Bearer ${accessToken}` } }
     )
