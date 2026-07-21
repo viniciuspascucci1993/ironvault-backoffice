@@ -93,6 +93,12 @@ export default function UsersTable({ users: initialUsers }: UsersTableProps) {
               <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
                 Criado em
               </th>
+              <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
+                Aprovação
+              </th>
+              <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -139,6 +145,14 @@ export default function UsersTable({ users: initialUsers }: UsersTableProps) {
                 </td>
                 <td className="px-6 py-4 text-slate-400 text-sm">
                   {new Date(user.createdAt).toLocaleDateString("pt-BR")}
+                </td>
+
+                <td className="px-6 py-4">
+                  <span
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium ${approvalColors[user.approvalStatus]}`}
+                  >
+                    {approvalLabels[user.approvalStatus]}
+                  </span>
                 </td>
 
                 <td className="px-6 py-4">
