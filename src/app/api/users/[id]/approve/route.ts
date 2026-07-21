@@ -3,8 +3,9 @@ import axios from "axios";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+ { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
     const accessToken = request.cookies.get('accessToken')?.value
 
@@ -13,7 +14,7 @@ export async function PATCH(
     }
 
     await axios.patch(
-      `${process.env.BFF_URL}/api/users/${params.id}/approve`,
+      `${process.env.BFF_URL}/api/users/${id}/approve`,
       {},
       { headers: { Authorization: `Bearer ${accessToken}` } }
     )
