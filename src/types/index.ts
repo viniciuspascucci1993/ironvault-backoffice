@@ -4,6 +4,7 @@ export interface User {
   role: "ADMIN" | "MERCHANT";
   active: boolean;
   emailConfirmed: boolean;
+  approvalStatus: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: string;
 }
 
