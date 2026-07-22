@@ -88,9 +88,6 @@ export default function UsersTable({ users: initialUsers }: UsersTableProps) {
                 Status
               </th>
               <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
-                Email Confirmado
-              </th>
-              <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
                 Criado em
               </th>
               <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
@@ -130,17 +127,6 @@ export default function UsersTable({ users: initialUsers }: UsersTableProps) {
                     }`}
                   >
                     {user.active ? "Ativo" : "Inativo"}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <span
-                    className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                      user.emailConfirmed
-                        ? "bg-emerald-500/20 text-emerald-400"
-                        : "bg-yellow-500/20 text-yellow-400"
-                    }`}
-                  >
-                    {user.emailConfirmed ? "Confirmado" : "Pendente"}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-slate-400 text-sm">
