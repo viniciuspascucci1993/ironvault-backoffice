@@ -1,11 +1,13 @@
-import { getServerApi } from "@/lib/serverApi";
+import { getServerApi, getTokenPayload } from "@/lib/serverApi";
 import { DashboardSummary } from "@/types";
 import { TrendingUp, Users, CreditCard, CheckCircle } from "lucide-react";
 import DashboardCharts from "@/components/ui/DashboardCharts";
 
 export default async function DashboardPage() {
   const api = await getServerApi();
-  console.log('BFF_URL:', process.env.BFF_URL)
+  const payload = await getTokenPayload();
+  const isAdmin = payload?.role === 'ADMIN';
+
   const res = await api.get<DashboardSummary>("/api/dashboard/summary");
   const summary = res.data;
 
@@ -21,6 +23,7 @@ export default async function DashboardPage() {
       value: summary.totalUsers,
       icon: Users,
       color: "text-blue-400",
+      show: isAdmin
     },
     {
       label: "Receita Total",
@@ -39,7 +42,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {cards.map((card) => {
+        {cards.filter(card => card.show).map((card) => {
           const Icon = card.icon;
           return (
             <div
