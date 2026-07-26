@@ -3,25 +3,35 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const hanbdleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       await axios.post("/api/auth/login", { email, password });
       router.push("/dashboard");
     } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } };
-      setError(error.response?.data?.message || "Erro ao fazer login");
+      const error = err as {
+        response?: { data?: { message?: string }; status?: number };
+      };
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+
+      if (status === 403 && message?.includes("pendente")) {
+        toast.error(
+          "Sua conta está pendente de aprovação. Aguarde o contato da nossa equipe.",
+        );
+      } else {
+        toast.error(message || "Erro ao fazer login");
+      }
     } finally {
       setLoading(false);
     }
@@ -62,7 +72,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {error && <p className="text-red-400 text-sm">{error}</p>}
 
           <button
             type="submit"
