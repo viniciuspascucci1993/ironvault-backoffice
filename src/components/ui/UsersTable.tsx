@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { User } from "@/types";
+import { MerchantProfile, User } from "@/types";
 import { UserPlus, Check, X } from "lucide-react";
 import NewUserModal from "@/components/ui/NewUserModal";
 import axios from "axios";
@@ -9,9 +9,10 @@ import toast from "react-hot-toast";
 
 interface UsersTableProps {
   users: User[];
+  merchantProfiles: Record<string, MerchantProfile>;
 }
 
-export default function UsersTable({ users: initialUsers }: UsersTableProps) {
+export default function UsersTable({ users: initialUsers, merchantProfiles }: UsersTableProps) {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState(initialUsers);
   const [loading, setLoading] = useState<string | null>(null);
@@ -88,6 +89,9 @@ export default function UsersTable({ users: initialUsers }: UsersTableProps) {
                 Status
               </th>
               <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
+                Negócio
+              </th>
+              <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
                 Criado em
               </th>
               <th className="text-left text-slate-400 text-sm font-medium px-6 py-4">
@@ -128,6 +132,23 @@ export default function UsersTable({ users: initialUsers }: UsersTableProps) {
                   >
                     {user.active ? "Ativo" : "Inativo"}
                   </span>
+                </td>
+
+                <td className="px-6 py-4 text-slate-300 text-sm">
+                  {user.role === "MERCHANT" && merchantProfiles[user.id] ? (
+                    <div>
+                      <p className="font-medium">
+                        {merchantProfiles[user.id].businessName}
+                      </p>
+                      {merchantProfiles[user.id].segment && (
+                        <p className="text-slate-400 text-xs">
+                          {merchantProfiles[user.id].segment}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-slate-500">—</span>
+                  )}
                 </td>
                 <td className="px-6 py-4 text-slate-400 text-sm">
                   {new Date(user.createdAt).toLocaleDateString("pt-BR")}
