@@ -8,6 +8,17 @@ export interface User {
   createdAt: string;
 }
 
+export interface MerchantProfile {
+  id: string;
+  userId: string;
+  businessName: string;
+  cpfOuCnpj: string | null;
+  segment: string | null;
+  phone: string | null;
+  website: string | null;
+  createdAt: string;
+}
+
 export interface Payment {
   id: string;
   amount: number;
