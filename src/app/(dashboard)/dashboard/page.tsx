@@ -38,7 +38,7 @@ export default async function DashboardPage() {
       value: `R$ ${summary.totalCommissions.toFixed(2)}`,
       icon: TrendingUp,
       color: "text-green-400",
-      show: true,
+      show: isAdmin,
     },
     {
       label: "Aprovadas",
