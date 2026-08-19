@@ -29,6 +29,8 @@ export interface Payment {
   externalId: string;
   payerEmail: string;
   failureReason: string | null;
+  applicationFee: number | null;
+  netAmount: number | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -45,6 +47,8 @@ export interface DashboardSummary {
   totalTransactions: number;
   totalUsers: number;
   totalRevenue: number;
+  totalNetRevenue: number;
+  totalCommissions: number;
   transactionsByStatus: {
     approved: number;
     failed: number;
