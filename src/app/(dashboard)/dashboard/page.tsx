@@ -17,21 +17,35 @@ export default async function DashboardPage() {
       value: summary.totalTransactions,
       icon: CreditCard,
       color: "text-indigo-400",
-      show: true
+      show: true,
     },
     {
       label: "Receita Total",
       value: `R$ ${summary.totalRevenue.toFixed(2)}`,
       icon: TrendingUp,
       color: "text-green-400",
-      show: true
+      show: true,
+    },
+    {
+      label: "Receita Liquida",
+      value: `R$ ${summary.totalNetRevenue.toFixed(2)}`,
+      icon: TrendingUp,
+      color: "text-green-400",
+      show: true,
+    },
+    {
+      label: "Comissão Ironvault",
+      value: `R$ ${summary.totalCommissions.toFixed(2)}`,
+      icon: TrendingUp,
+      color: "text-green-400",
+      show: true,
     },
     {
       label: "Aprovadas",
       value: summary.transactionsByStatus.approved,
       icon: CheckCircle,
       color: "text-emerald-400",
-      show: true
+      show: true,
     },
     {
       label: "Total de Usuários",
